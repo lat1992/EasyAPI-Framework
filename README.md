@@ -1,5 +1,5 @@
 # EasyAPI-Framework
-An easy API framework with MVC pattern.
+An easy API framework with MVC pattern for PHP.
 
 # Next Step
 - A lib to manage MEMORY(HEAP) table, auto use MEMORY table to boost performance, example: basic query "SELECT id, name FROM USER WHERE name LIKE '%e%'", will convert to "SELECT id, name FROM MEMORY_USER WHERE name LIKE '%e%'".
