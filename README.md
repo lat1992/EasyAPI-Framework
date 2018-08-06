@@ -9,3 +9,5 @@ An easy API framework.
 - A script to add new controller.
 
 - A script to add new model.
+
+- A script to generate database.
