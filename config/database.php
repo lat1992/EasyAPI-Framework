@@ -1,7 +1,8 @@
 <?php
 
 $database = array(
-	'mysql' => array(
+	'sql' => array(
+		'dms' => '', // mysql / postgre / oracle / mssql / sqlite
 		'host' => 'localhost',
 		'username' => '',
 		'password' => '',

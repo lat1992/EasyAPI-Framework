@@ -17,7 +17,7 @@ class Auth {
 		$result = $this->user->getUserByUsernameOrEmail($username_email);
 		$user = $result->fetch_assoc();
 		$password_hash = crypt($password, $user['salt']);
-		if (strcmp($password_hash, $user['password']) === 0) {
+		if ($password_hash === $user['password']) {
 			$token = substr(md5(microtime()), rand(0, 26), 20);
 			$this->user_token->save($user['id'], $token);
 			return (object)array(
@@ -33,8 +33,15 @@ class Auth {
 		);
 	}
 
-	public function logout() {
-		
+	public function logout($params) {
+		$token = $params['token'];
+		$result = $this->user_token->getIdByToken($token);
+		$user_token = $result->fetch_assoc();
+		$this->user_token->delete($user_token['id']);
+		return (object)array(
+			'code' => 200,
+			'message' => 'LogoutSuccess'
+		);
 	}
 	
 }
