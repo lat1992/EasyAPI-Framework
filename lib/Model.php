@@ -11,7 +11,6 @@ if ($database['sql']['dms'] === 'sql') {
 } else {
 	require_once('lib/Db/DbSqlite.php');	
 }
-
 require_once('lib/Query.php');
 
 abstract class Model {
