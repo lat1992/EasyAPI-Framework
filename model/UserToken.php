@@ -10,7 +10,6 @@ class UserToken extends Model {
 		$this->query->select("id")
 		->where("user_id = ". $user_id);
 		$tmp = $this->execQuery();
-		$this->query->clear();
 		if ($row = $tmp->fetch_assoc()) {
 			$this->query->update("token" => $this->string($token))
 			->where("id" = $row['id']);
