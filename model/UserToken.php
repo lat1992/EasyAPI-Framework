@@ -28,12 +28,6 @@ class UserToken extends Model {
 		return $this->db->execQuery();
 	}
 
-	public function delete($id) {
-		$this->query->delete()
-		->where("id = ". $id);
-		return $this->db->execQuery();
-	}
-
 }
 
 ?>

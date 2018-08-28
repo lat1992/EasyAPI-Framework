@@ -40,6 +40,12 @@ abstract class Model {
 		
 	}
 
+	public function delete($id) {
+		$this->query->delete()
+		->where("id = ". $id);
+		return $this->db->execQuery();
+	}
+
 }
 
 ?>
