@@ -6,22 +6,6 @@ class UserToken extends Model {
 		parent::__construct('USERTOKEN');
 	}
 
-	public function save($user_id, $token) {
-		$this->query->select("id")
-		->where("user_id = ". $user_id);
-		$tmp = $this->execQuery();
-		if ($row = $tmp->fetch_assoc()) {
-			$this->query->update("token" => $this->string($token))
-			->where("id" = $row['id']);
-		} else {
-			$this->query->insert("user_id" => $user_id, "token" => $this->string($token));
-		}
-		$this->execQuery();
-		if (isset($row) === true)
-			return $row['id'];
-		return $this->db->getInsertId();
-	}
-
 	public function getIdByToken($token) {
 		$this->query->select("id")
 		->where("token LIKE ". $this->string($token));

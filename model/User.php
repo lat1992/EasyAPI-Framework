@@ -10,7 +10,7 @@ class User extends Model {
 		$this->query->insert([
 			"username" => $this->string($username),
 			"password" => $this->string($password_hash),
-			"email" => $this->stirng($email),
+			"email" => $this->string($email),
 			"salt" => $this->string($salt)
 		]);
 		$this->execQuery();

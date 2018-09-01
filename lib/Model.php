@@ -40,6 +40,27 @@ abstract class Model {
 		
 	}
 
+	public function save($columns_values) {
+		$cv = new stdClass();
+		foreach ($columns_values as $column => $value) {
+			if ($column !== 'id') {
+				if (($pos = strpos($column, ':s')) !== false) {
+					$cv[substr($column, 0, $pos + 1)] = $this->string($value);
+				} else {
+					$cv[$column] = $value;
+				}
+			}
+		}
+		if (isset($columns_values['id'])) {
+			$this->query->update($cv)
+			->where("id" = $columns_values['id']);
+		} else {
+			$this->query->insert($cv);
+			return $this->db->getInsertId();
+		}
+		return $this->db->execQuery();
+	}
+
 	public function delete($id) {
 		$this->query->delete()
 		->where("id = ". $id);

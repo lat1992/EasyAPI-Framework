@@ -19,7 +19,10 @@ class Auth {
 		$password_hash = crypt($password, $user['salt']);
 		if ($password_hash === $user['password']) {
 			$token = substr(md5(microtime()), rand(0, 26), 20);
-			$this->user_token->save($user['id'], $token);
+			$this->user_token->save([
+				'user_id' => $user['id'],
+				'token:s' => $token
+			]);
 			return (object)array(
 				'code' => 200,
 				'user_id' => $user['id'],
