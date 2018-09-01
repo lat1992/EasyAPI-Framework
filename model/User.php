@@ -6,17 +6,6 @@ class User extends Model {
 		parent::__construct('USER');
 	}
 
-	public function save($username, $password_hash, $email, $salt) {
-		$this->query->insert([
-			"username" => $this->string($username),
-			"password" => $this->string($password_hash),
-			"email" => $this->string($email),
-			"salt" => $this->string($salt)
-		]);
-		$this->execQuery();
-		return $this->db->getInsertId();
-	}
-
 	public function getUserById($id) {
 		$this->query->select("*")->where("id = ". $id);
 		return $this->execQuery();
