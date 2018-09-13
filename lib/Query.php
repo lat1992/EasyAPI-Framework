@@ -4,10 +4,12 @@ class Query {
 
 	private $sql;
 	private $table;
+	private $dms;
 
-	function __construct($table = "") {
+	function __construct($table = "", $dms = '') {
 		$this->sql = "";
 		$this->setTable($table);
+		$this->dms = $dms;
 	}
 
 	public function add($sql) {
@@ -40,7 +42,11 @@ class Query {
 	}
 
 	public function insert($columns_values) {
-		$this->add("INSERT INTO ". $this->table ." (". implode(",", array_keys($columns_values)) .") VALUES (". implode(",", $columns_values) .")");
+		$sql = "INSERT INTO ". $this->table ." (". implode(",", array_keys($columns_values)) .") VALUES (". implode(",", $columns_values) .")";
+		if ($this->dms === 'mssql') {
+			$sql .= "; SELECT SCOPE_IDENTITY() AS IDENTITY_COLUMN_NAME";
+		}
+		$this->add($sql);
 		return $this;
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
-if ($database['sql']['dms'] === 'sql') {
-	require_once('lib/Db/Dbsql.php');
+if ($database['sql']['dms'] === 'mysql') {
+	require_once('lib/Db/DbMysql.php');
 } else if ($database['sql']['dms'] === 'postgre') {
 	require_once('lib/Db/DbPostgre.php');
 } else if ($database['sql']['dms'] === 'oracle') {
@@ -23,13 +23,21 @@ abstract class Model {
 		global $database;
 		$this->table = $table;
 		$this->db = new Db($database['sql']['host'], $database['sql']['username'], $database['sql']['password'], $database['sql']['database'], $database['sql']['charset']);
-		$this->query = new Query($table);
+		$this->query = new Query($table, $database['sql']['dms']);
 	}
 
 	public function execQuery() {
 		$result = $this->db->exec($this->query->build());
 		$this->query->clear();
 		return $result;
+	}
+
+	public function commit() {
+		return $this->db->commit();
+	}
+
+	public function rollback() {
+		return $this->db->rollback();
 	}
 
 	public function string($str) {
