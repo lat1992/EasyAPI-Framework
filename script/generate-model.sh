@@ -1,0 +1,1 @@
+# This script is used to generate model file and SQL script.
