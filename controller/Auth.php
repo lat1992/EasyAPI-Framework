@@ -43,10 +43,32 @@ class Auth {
 		$this->user_token->delete($user_token['id']);
 		return (object)array(
 			'code' => 200,
-			'message' => 'LogoutSuccess'
+			'message' => 'LogoutSuccessful'
 		);
 	}
-	
+
+	public function createAccount($params) {
+		$username_email = $params['username_email'];
+		$password = $params['password'];
+		$salt =  substr(md5(microtime()), rand(0, 26), 6);
+		$password_hash = crypt($password, $salt);
+		$result = $this->user->save([
+			'username_email' => $username_email,
+			'password' => $password_hash,
+			'salt' => $salt
+		]);
+		if ($result !== false) {
+			return (object)array(
+				'code' => 201,
+				'message' => 'CreateAccountSuccessful'
+			);
+		}
+		return (object)array(
+			'code' => 400,
+			'message' => 'CreateAccountUnsuccessful'
+		);
+	}
+
 }
 
 ?>

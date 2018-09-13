@@ -4,10 +4,10 @@ require_once('model/User.php');
 
 class Profil {
 
-	private $user;
+	private $user_infomation;
 
 	function _construct() {
-		$this->user = new User();
+		$this->user_information = new UserInformation();
 	}
 
 }
