@@ -2,27 +2,37 @@
 
 class Db {
 
-	private $mysql;
+	private $sql;
 
 	function __construct($host, $username, $password, $database, $charset) {
-		$this->mysql = new mysqli($host, $username, $password, $database);
-		$this->mysql->set_charset($charset);
+		$this->sql = new mysqli($host, $username, $password, $database);
+		$this->sql->set_charset($charset);
+		//$this->sql->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+		$this->sql->autocommit(FALSE);
 	}
 
 	function __destruct() {
-		$this->mysql->close();
+		$this->sql->close();
 	}
 
 	public function exec($sql) {
-		return $this->mysql->query($sql);
+		return $this->sql->query($sql);
 	}
 
 	public function realEscapeString($str) {
-		return $this->mysql->real_escape_string($str);
+		return $this->sql->real_escape_string($str);
 	}
 
 	public function getInsertDb() {
-		return $this->mysql->insert_id;
+		return $this->sql->insert_id;
+	}
+
+	public function commit() {
+		return $this->sql->commit();
+	}
+
+	public function rollback() {
+		return $this->sql->rollback();
 	}
 
 }
